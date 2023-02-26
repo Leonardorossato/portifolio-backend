@@ -3,7 +3,7 @@ import { CreateEmailInput } from './dto/create-email.input';
 import { EmailService } from './email.service';
 import { EmailSchema } from './schema/email.schema';
 
-@Resolver()
+@Resolver(() => EmailSchema)
 export class EmailResolver {
   constructor(private readonly emailService: EmailService) {}
 
@@ -15,7 +15,7 @@ export class EmailResolver {
   }
 
   @Query(() => [EmailSchema], { name: 'email' })
-  findAll(): Promise<EmailSchema[]> {
-    return this.emailService.findAll();
+  async findAll(): Promise<EmailSchema[]> {
+    return await this.emailService.findAll();
   }
 }
