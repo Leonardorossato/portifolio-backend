@@ -7,7 +7,7 @@ import { EmailModule } from './email/email.module';
 @Module({
   imports: [
     EmailModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRootAsync(PostgresSqlConnection),
   ],
 })
