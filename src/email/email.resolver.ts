@@ -1,18 +1,21 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateEmailInput } from './dto/create-email.input';
 import { EmailService } from './email.service';
+import { EmailSchema } from './schema/email.schema';
 
-@Resolver(() => EmailService)
+@Resolver()
 export class EmailResolver {
   constructor(private readonly emailService: EmailService) {}
 
-  @Mutation(() => EmailService)
-  createEmail(@Args('createEmailInput') createEmailInput: CreateEmailInput) {
-    return this.emailService.create(createEmailInput);
+  @Mutation(() => EmailSchema)
+  async createEmail(
+    @Args('createEmailInput') createEmailInput: CreateEmailInput,
+  ) {
+    return await this.emailService.create(createEmailInput);
   }
 
-  @Query(() => [EmailService], { name: 'email' })
-  findAll() {
+  @Query(() => [EmailSchema], { name: 'email' })
+  findAll(): Promise<EmailSchema[]> {
     return this.emailService.findAll();
   }
 }
